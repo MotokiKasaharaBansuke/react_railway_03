@@ -44,6 +44,7 @@ export const SignUp = () => {
           <div>
             <label htmlFor="username">ユーザー名</label>
             <input
+              id="username"
               type="text"
               name="username"
               value={formData.username}
@@ -53,6 +54,7 @@ export const SignUp = () => {
           <div>
             <label htmlFor="email">メールアドレス</label>
             <input
+              id="email"
               type="email"
               name="email"
               value={formData.email}
@@ -68,6 +70,7 @@ export const SignUp = () => {
           <div>
             <label htmlFor="password">パスワード</label>
             <input
+              id="password"
               type="password"
               name="password"
               value={formData.password}
