@@ -1,13 +1,27 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 const TokenContext = createContext();
+
 export const useToken = () => useContext(TokenContext);
 
 export const TokenProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+  const getTokenFromLocalStorage = () => {
+    return localStorage.getItem("token");
+  };
+
+  const [token, setToken] = useState(getTokenFromLocalStorage());
+
+  const saveToken = (userToken) => {
+    localStorage.setItem("token", userToken);
+    setToken(userToken);
+  };
+
+  useEffect(() => {
+    setToken(getTokenFromLocalStorage());
+  }, []);
 
   return (
-    <TokenContext.Provider value={{ token, setToken }}>
+    <TokenContext.Provider value={{ token, setToken: saveToken }}>
       {children}
     </TokenContext.Provider>
   );

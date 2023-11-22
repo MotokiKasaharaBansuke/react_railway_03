@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { signUp, uploadIcon } from "../../services/userService";
 import { useToken } from "../../services/tokenService";
 import Compressor from "compressorjs";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -26,10 +27,11 @@ export const SignUp = () => {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
+  const navigate = useNavigate();
   const [apiError, setApiError] = useState("");
   const [image, setImage] = useState(null);
   const [isLoding, setIsLoading] = useState(false);
-  const { setToken } = useToken();
+  const { token, setToken } = useToken();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -53,10 +55,10 @@ export const SignUp = () => {
         data.password
       );
       setToken(signUpResponse.token);
-
       if (image) {
         await uploadIcon(image, signUpResponse.token);
       }
+      navigate("/");
     } catch (error) {
       setApiError(error.message || "アカウント作成中にエラーが発生しました");
     } finally {
