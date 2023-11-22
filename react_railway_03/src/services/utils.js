@@ -17,3 +17,21 @@ export async function fetchHandler(url, options) {
     }
   }
 }
+
+export const createOptions = (method, token = null, body = null) => {
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  const options = {
+    method: method,
+    headers: headers,
+  };
+
+  if (body) options.body = JSON.stringify(body);
+
+  return options;
+};

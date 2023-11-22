@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useToken } from "../../services/tokenService";
-import { getBooks } from "../../services/bookService";
+import { getBooks, getPublickBooks } from "../../services/bookService";
 import "./BookList.scss";
+import { Header } from "../Header/Header";
 
 const BOOKS_PER_PAGE = 10;
 
@@ -16,16 +17,29 @@ export const BookList = () => {
   useEffect(() => {
     setLoading(true);
     const offset = (currentPage - 1) * BOOKS_PER_PAGE;
-    getBooks(token, offset)
-      .then((data) => {
-        setBooks(data);
-        setHasMore(data.length === BOOKS_PER_PAGE);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
+    if (token) {
+      getBooks(token, offset)
+        .then((data) => {
+          setBooks(data);
+          setHasMore(data.length === BOOKS_PER_PAGE);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setLoading(false);
+        });
+    } else {
+      getPublickBooks(offset)
+        .then((data) => {
+          setBooks(data);
+          setHasMore(data.length === BOOKS_PER_PAGE);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setLoading(false);
+        });
+    }
   }, [currentPage, token]);
 
   const goToNextPage = () => {
@@ -37,33 +51,38 @@ export const BookList = () => {
   };
 
   return (
-    <div className="book-list">
-      <h2 className="book-list__header">一覧</h2>
-      {loading && <p className="book-list__loading">Loading books...</p>}
-      {error && <p className="book-list__error">Error: {error}</p>}
-      <ul className="book-list__items">
-        {books.map((book) => (
-          <li key={book.id} className="book-list__item">
-            {book.title}
-          </li>
-        ))}
-      </ul>
-      <div className="book-list__pagination">
-        {currentPage > 1 && (
-          <button
-            onClick={goToPreviousPage}
-            className="book-list__pagination-btn"
-          >
-            前
-          </button>
-        )}
-        <span className="book-list__current-page">ページ {currentPage}</span>
-        {hasMore && (
-          <button onClick={goToNextPage} className="book-list__pagination-btn">
-            次
-          </button>
-        )}
+    <>
+      <div className="book-list">
+        <h2 className="book-list__header">一覧</h2>
+        {loading && <p className="book-list__loading">Loading books...</p>}
+        {error && <p className="book-list__error">Error: {error}</p>}
+        <ul className="book-list__items">
+          {books.map((book) => (
+            <li key={book.id} className="book-list__item">
+              {book.title}
+            </li>
+          ))}
+        </ul>
+        <div className="book-list__pagination">
+          {currentPage > 1 && (
+            <button
+              onClick={goToPreviousPage}
+              className="book-list__pagination-btn"
+            >
+              前
+            </button>
+          )}
+          <span className="book-list__current-page">ページ {currentPage}</span>
+          {hasMore && (
+            <button
+              onClick={goToNextPage}
+              className="book-list__pagination-btn"
+            >
+              次
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

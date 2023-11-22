@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signIn } from "../../services/userService";
 import { useToken } from "../../services/tokenService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -26,18 +26,20 @@ export const SignIn = () => {
     resolver: yupResolver(schema),
   });
   const [apiError, setApiError] = useState("");
-  const { setToken } = useToken();
+  const { token, setToken } = useToken();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      const signUpResponse = await signIn(data.email, data.password);
+      const signUpResponse = await signIn(data);
       setToken(signUpResponse.token);
       navigate("/");
     } catch (error) {
       setApiError(error.message || "ログイン中にエラーが発生しました");
     }
   };
+
+  if (token) return <Navigate to="/" />;
 
   return (
     <div>

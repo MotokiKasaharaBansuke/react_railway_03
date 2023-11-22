@@ -5,11 +5,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { signUp, uploadIcon } from "../../services/userService";
 import { useToken } from "../../services/tokenService";
 import Compressor from "compressorjs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const schema = yup
   .object({
-    username: yup.string().required("ユーザー名は必須です"),
+    name: yup.string().required("ユーザー名は必須です"),
     email: yup
       .string()
       .email("無効なメールアドレスです")
@@ -49,14 +49,10 @@ export const SignUp = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      const signUpResponse = await signUp(
-        data.username,
-        data.email,
-        data.password
-      );
+      const signUpResponse = await signUp(data);
       setToken(signUpResponse.token);
       if (image) {
-        await uploadIcon(image, signUpResponse.token);
+        await uploadIcon(signUpResponse.token, image);
       }
       navigate("/");
     } catch (error) {
@@ -66,6 +62,8 @@ export const SignUp = () => {
     }
   };
 
+  if (token) return <Navigate to="/" />;
+
   return (
     <div>
       <h2>アカウント新規作成</h2>
@@ -73,11 +71,9 @@ export const SignUp = () => {
         {apiError && <p style={{ color: "red" }}>{apiError}</p>}
         {isLoding && <p>Loading...</p>}
         <div>
-          <label htmlFor="username">ユーザー名</label>
-          <input id="username" type="text" {...register("username")} />
-          {errors.username && (
-            <p style={{ color: "red" }}>{errors.username.message}</p>
-          )}
+          <label htmlFor="name">ユーザー名</label>
+          <input id="name" type="text" {...register("name")} />
+          {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
         </div>
         <div>
           <label htmlFor="email">メールアドレス</label>

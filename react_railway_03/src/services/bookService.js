@@ -1,26 +1,19 @@
-import { fetchHandler } from "./utils";
+import { fetchHandler, createOptions } from "./utils";
 
 const ENDPOINT = "https://railway.bookreview.techtrain.dev";
-
-const createOptions = (method, token, body = null) => {
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  if (body) options.body = JSON.stringify(body);
-
-  return options;
-};
 
 export const getBooks = (token, offset) => {
   const url = offset
     ? `${ENDPOINT}/books?offset=${offset}`
     : `${ENDPOINT}/books`;
   return fetchHandler(url, createOptions("GET", token));
+};
+
+export const getPublickBooks = (offset) => {
+  const url = offset
+    ? `${ENDPOINT}/public/books?offset=${offset}`
+    : `${ENDPOINT}/public/books`;
+  return fetchHandler(url, createOptions("GET"));
 };
 
 export const getBook = (token, id) => {

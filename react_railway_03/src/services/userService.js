@@ -1,30 +1,16 @@
-import { fetchHandler } from "./utils";
+import { fetchHandler, createOptions } from "./utils";
 
 const ENDPOINT = "https://railway.bookreview.techtrain.dev";
 
-export const signIn = (email, password) => {
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  };
-  return fetchHandler(`${ENDPOINT}/signin`, options);
+export const signIn = (data) => {
+  return fetchHandler(`${ENDPOINT}/signin`, createOptions("POST", null, data));
 };
 
-export const signUp = (name, email, password) => {
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name, email, password }),
-  };
-  return fetchHandler(`${ENDPOINT}/users`, options);
+export const signUp = (data) => {
+  return fetchHandler(`${ENDPOINT}/users`, createOptions("POST", null, data));
 };
 
-export const uploadIcon = (file, token) => {
+export const uploadIcon = (token, file) => {
   const formData = new FormData();
   formData.append("icon", file);
   const options = {
@@ -35,4 +21,8 @@ export const uploadIcon = (file, token) => {
     body: formData,
   };
   return fetchHandler(`${ENDPOINT}/uploads`, options);
+};
+
+export const getUser = (token) => {
+  return fetchHandler(`${ENDPOINT}/users`, createOptions("GET", token));
 };
