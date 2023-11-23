@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useFlashMessage } from "../../services/useFlashMessageContext";
+import { useUser } from "../../services/useUserContext";
 
 const schema = yup
   .object({
@@ -26,6 +27,7 @@ export const Profile = () => {
   const [apiError, setApiError] = useState(null);
   const { setMessage } = useFlashMessage();
   const [initialName, setInitialName] = useState("");
+  const { refreshUser } = useUser();
 
   useEffect(() => {
     getUser(token)
@@ -42,6 +44,7 @@ export const Profile = () => {
     updateUser(token, data)
       .then((data) => {
         setMessage(`ユーザー名を${data.name}に変更しました`);
+        refreshUser();
         navigate(-1);
       })
       .catch((error) => {
@@ -57,12 +60,8 @@ export const Profile = () => {
         {apiError && <p style={{ color: "red" }}>{apiError}</p>}
         <div>
           <label htmlFor="name">ユーザー名</label>
-          <input
-            id="name"
-            type="text"
-            {...register("name", { required: true })}
-          />
-          {errors.name && <p style={{ color: "red" }}>ユーザー名は必須です</p>}
+          <input id="name" type="text" {...register("name")} />
+          {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
         </div>
         <button type="submit" disabled={!isNameChanged}>
           変更する

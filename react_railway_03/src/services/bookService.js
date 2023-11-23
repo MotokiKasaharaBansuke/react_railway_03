@@ -21,7 +21,7 @@ export const getBook = (token, id) => {
 };
 
 export const postBook = (token, book) => {
-  return fetchHandler(`${ENDPOINT}/users`, createOptions("POST", token, book));
+  return fetchHandler(`${ENDPOINT}/books`, createOptions("POST", token, book));
 };
 
 export const updateBook = (token, id, book) => {

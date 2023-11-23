@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
   const { token } = useToken();
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+  const refreshUser = () => {
     if (token) {
       getUser(token)
         .then((data) => {
@@ -22,10 +22,14 @@ export const UserProvider = ({ children }) => {
           setMessage(error.message);
         });
     }
-  }, [token, user, setMessage]);
+  };
+
+  useEffect(() => {
+    refreshUser();
+  }, [token, setMessage]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, refreshUser }}>
       {children}
     </UserContext.Provider>
   );

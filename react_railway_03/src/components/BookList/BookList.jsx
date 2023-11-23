@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useToken } from "../../services/useTokenContext";
 import { getBooks, getPublickBooks } from "../../services/bookService";
 import "./BookList.scss";
+import { Link } from "react-router-dom";
 
 const BOOKS_PER_PAGE = 10;
 
@@ -51,6 +52,9 @@ export const BookList = () => {
 
   return (
     <>
+      <div>
+        <Link to="/new">新規書籍レビュー作成</Link>
+      </div>
       <div className="book-list">
         <h2 className="book-list__header">一覧</h2>
         {loading && <p className="book-list__loading">Loading books...</p>}

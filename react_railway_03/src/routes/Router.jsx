@@ -8,6 +8,7 @@ import { Profile } from "../components/Profile/Profile";
 import { FlashMessage } from "../components/FlashMessage/FlashMessage";
 import { PrivateRoute } from "./PrivateRoute";
 import { useToken } from "../services/useTokenContext";
+import { NewBook } from "../components/NewBook/NewBook";
 
 export const Router = () => {
   const { token } = useToken();
@@ -25,6 +26,15 @@ export const Router = () => {
           element={
             <PrivateRoute>
               <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/new"
+          element={
+            <PrivateRoute>
+              <NewBook />
             </PrivateRoute>
           }
         />

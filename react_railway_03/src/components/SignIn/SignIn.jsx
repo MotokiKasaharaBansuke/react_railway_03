@@ -48,24 +48,16 @@ export const SignIn = () => {
         {apiError && <p style={{ color: "red" }}>{apiError}</p>}
         <div>
           <label htmlFor="email">メールアドレス</label>
-          <input
-            id="email"
-            type="email"
-            {...register("email", { required: true })}
-          />
+          <input id="email" type="email" {...register("email")} />
           {errors.email && (
-            <p style={{ color: "red" }}>メールアドレスは必須です</p>
+            <p style={{ color: "red" }}>{errors.email.message}</p>
           )}
         </div>
         <div>
           <label htmlFor="password">パスワード</label>
-          <input
-            id="password"
-            type="password"
-            {...register("password", { required: true })}
-          />
+          <input id="password" type="password" {...register("password")} />
           {errors.password && (
-            <p style={{ color: "red" }}>パスワードは必須です</p>
+            <p style={{ color: "red" }}>{errors.password.message}</p>
           )}
         </div>
         <button type="submit">ログイン</button>
