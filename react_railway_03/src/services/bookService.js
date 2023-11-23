@@ -32,6 +32,7 @@ export const updateBook = (token, id, book) => {
 };
 
 export const deleteBook = (token, id) => {
+  console.log(`${ENDPOINT}/books/${id}`);
   return fetchHandler(
     `${ENDPOINT}/books/${id}`,
     createOptions("DELETE", token)

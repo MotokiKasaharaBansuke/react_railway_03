@@ -10,6 +10,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { useToken } from "../services/useTokenContext";
 import { NewBook } from "../components/NewBook/NewBook";
 import { Book } from "../components/Book/Book";
+import { EditBook } from "../components/EditBook/EditBook";
 
 export const Router = () => {
   const { token } = useToken();
@@ -22,6 +23,15 @@ export const Router = () => {
         <Route exact path="/signin" element={<SignIn />} />
         <Route exact path="/" element={<BookList />} />
         <Route exact path="/book/:id" element={<Book />} />
+        <Route
+          exact
+          path="/book/:id/edit"
+          element={
+            <PrivateRoute>
+              <EditBook />
+            </PrivateRoute>
+          }
+        />
         <Route
           exact
           path="/profile"

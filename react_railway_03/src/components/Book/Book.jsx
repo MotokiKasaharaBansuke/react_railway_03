@@ -20,7 +20,7 @@ export const Book = () => {
       .catch((error) => {
         setApiError(error.message);
       })
-      .finally(() => setLoading(false)); // setLoading を関数として渡す
+      .finally(() => setLoading(false));
   }, [id, token]);
 
   return (

@@ -62,7 +62,11 @@ export const BookList = () => {
         <ul className="book-list__items">
           {books.map((book) => (
             <li key={book.id} className="book-list__item">
-              <Link to={`/book/${book.id}`}>{book.title}</Link>
+              <Link
+                to={book.isMine ? `/book/${book.id}/edit` : `/book/${book.id}`}
+              >
+                {book.title}
+              </Link>
             </li>
           ))}
         </ul>
