@@ -50,6 +50,10 @@ export const BookList = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
+  const handleClick = () => {
+    console.log("send log");
+  };
+
   return (
     <>
       <div>
@@ -63,6 +67,7 @@ export const BookList = () => {
           {books.map((book) => (
             <li key={book.id} className="book-list__item">
               <Link
+                onClick={handleClick}
                 to={book.isMine ? `/book/${book.id}/edit` : `/book/${book.id}`}
               >
                 {book.title}

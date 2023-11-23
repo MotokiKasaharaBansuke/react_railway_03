@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUp, uploadIcon } from "../../services/userService";
 import { useToken } from "../../services/useTokenContext";
 import Compressor from "compressorjs";
 import { useNavigate, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -66,6 +67,7 @@ export const SignUp = () => {
 
   return (
     <div>
+      <Link to="/signin">ログインページ</Link>
       <h2>アカウント新規作成</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {apiError && <p style={{ color: "red" }}>{apiError}</p>}

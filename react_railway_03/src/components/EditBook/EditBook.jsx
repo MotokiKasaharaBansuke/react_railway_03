@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useToken } from "../../services/useTokenContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getBook, postBook, deleteBook } from "../../services/bookService";
+import { getBook, deleteBook, updateBook } from "../../services/bookService";
 import { useFlashMessage } from "../../services/useFlashMessageContext";
 
 const schema = yup
@@ -46,7 +46,7 @@ export const EditBook = () => {
   }, [token, id, setValue]);
 
   const onSubmit = (data) => {
-    postBook(token, data)
+    updateBook(token, id, data)
       .then(() => {
         setMessage("レビューを更新しました");
         navigate("/");

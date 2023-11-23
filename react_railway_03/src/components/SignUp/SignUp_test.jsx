@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm, useFormState } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { signIn } from "../../services/userService";
-import { useToken } from "../../services/useTokenContext";
-import { useNavigate, Navigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 const schema = yup
   .object({
+    name: yup.string().required("ユーザー名は必須です"),
     email: yup
       .string()
       .email("無効なメールアドレスです")
@@ -17,7 +14,7 @@ const schema = yup
   })
   .required();
 
-export const SignIn = () => {
+export const SignUpTest = () => {
   const {
     register,
     handleSubmit,
@@ -26,33 +23,25 @@ export const SignIn = () => {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
-  const [apiError, setApiError] = useState("");
-  const { token, setToken } = useToken();
-  const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
-    try {
-      const signUpResponse = await signIn(data);
-      setToken(signUpResponse.token);
-      navigate("/");
-    } catch (error) {
-      setApiError(error.message || "ログイン中にエラーが発生しました");
-    }
-  };
-
-  if (token) return <Navigate to="/" />;
+  const onSubmit = async (data) => {};
 
   return (
     <div>
-      <Link to="/signup">アカウント作成ページ</Link>
-      <h2>ログイン</h2>
+      <h2>アカウント新規作成</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {apiError && <p style={{ color: "red" }}>{apiError}</p>}
+        <div>
+          <label htmlFor="name">ユーザー名</label>
+          <input id="name" type="text" {...register("name")} />
+          {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
+        </div>
         <div>
           <label htmlFor="email">メールアドレス</label>
           <input id="email" type="email" {...register("email")} />
           {errors.email && (
-            <p style={{ color: "red" }}>{errors.email.message}</p>
+            <p className="emailError" style={{ color: "red" }}>
+              {errors.email.message}
+            </p>
           )}
         </div>
         <div>
@@ -62,7 +51,7 @@ export const SignIn = () => {
             <p style={{ color: "red" }}>{errors.password.message}</p>
           )}
         </div>
-        <button type="submit">ログイン</button>
+        <button type="submit">アカウント作成</button>
       </form>
     </div>
   );

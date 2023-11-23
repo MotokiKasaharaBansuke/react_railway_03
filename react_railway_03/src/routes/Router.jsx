@@ -16,7 +16,7 @@ export const Router = () => {
   const { token } = useToken();
   return (
     <BrowserRouter>
-      {token && <Header />}
+      <Header />
       <FlashMessage />
       <Routes>
         <Route exact path="/signup" element={<SignUp />} />

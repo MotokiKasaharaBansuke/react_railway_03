@@ -2,6 +2,7 @@ import React from "react";
 import { useUser } from "../../services/useUserContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useToken } from "../../services/useTokenContext";
+import "./Header.scss";
 
 export const Header = () => {
   const { user } = useUser();
@@ -10,18 +11,44 @@ export const Header = () => {
 
   const handleLogout = () => {
     removeToken();
-    navigate("/signup");
+    navigate("/signin");
   };
   return (
-    <>
-      <div>
-        <div>サイト名</div>
-        <div>
-          {user && <Link to="/profile">{user.name}</Link>}
-          {token && <button onClick={handleLogout}>ログアウト</button>}
-          {!user && <Link to="/signin">ログイン</Link>}
+    <div className="header">
+      <div className="header__logo">サイト名</div>
+      {token && (
+        <div className="header__nav">
+          {user && (
+            <div className="header__user">
+              <img
+                src={user.iconUrl}
+                alt="User"
+                className="header__user-icon"
+              />
+              <Link to="/profile" className="header__user-name">
+                {user.name}
+              </Link>
+            </div>
+          )}
+          {token && (
+            <button onClick={handleLogout} className="header__logout-btn">
+              ログアウト
+            </button>
+          )}
+          {!user && (
+            <Link to="/signin" className="header__signin-link">
+              ログイン
+            </Link>
+          )}
         </div>
-      </div>
-    </>
+      )}
+      {!token && (
+        <>
+          <Link to="/signin" className="header__signin-link">
+            ログイン
+          </Link>
+        </>
+      )}
+    </div>
   );
 };
