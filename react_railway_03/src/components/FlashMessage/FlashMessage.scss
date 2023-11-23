@@ -1,0 +1,21 @@
+@keyframes slideDown {
+  0%,
+  100% {
+    top: -50px;
+  }
+  10%,
+  90% {
+    top: 10px;
+  }
+}
+
+.flash-message {
+  position: absolute;
+  top: -50px;
+  right: 10px;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  animation: slideDown 3s ease-in-out;
+}

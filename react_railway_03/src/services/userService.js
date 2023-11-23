@@ -26,3 +26,7 @@ export const uploadIcon = (token, file) => {
 export const getUser = (token) => {
   return fetchHandler(`${ENDPOINT}/users`, createOptions("GET", token));
 };
+
+export const updateUser = (token, user) => {
+  return fetchHandler(`${ENDPOINT}/users`, createOptions("PUT", token, user));
+};

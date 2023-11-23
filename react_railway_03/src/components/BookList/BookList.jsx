@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useToken } from "../../services/tokenService";
+import { useToken } from "../../services/useTokenContext";
 import { getBooks, getPublickBooks } from "../../services/bookService";
 import "./BookList.scss";
-import { Header } from "../Header/Header";
 
 const BOOKS_PER_PAGE = 10;
 

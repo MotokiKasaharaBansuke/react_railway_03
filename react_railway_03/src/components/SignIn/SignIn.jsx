@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signIn } from "../../services/userService";
-import { useToken } from "../../services/tokenService";
+import { useToken } from "../../services/useTokenContext";
 import { useNavigate, Navigate } from "react-router-dom";
 
 const schema = yup

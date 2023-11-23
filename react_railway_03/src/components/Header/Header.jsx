@@ -1,34 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useToken } from "../../services/tokenService";
-import { getUser } from "../../services/userService";
+import { useUser } from "../../services/useUserContext";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
-  const { token } = useToken();
-  const [name, setName] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (token) {
-      getUser(token)
-        .then((data) => {
-          console.log(data);
-          setName(data.name);
-        })
-        .catch((error) => {
-          setError(error);
-        });
-    }
-  });
-
+  const { user } = useUser();
   return (
     <>
       <div>
-        {error && <p>Error: {error}</p>}
         <div>サイト名</div>
         <div>
-          {token && <p>{name}</p>}
-          {!token && <Link to="/signin">ログイン</Link>}
+          {user && <Link to="/profile">{user.name}</Link>}
+          {!user && <Link to="/signin">ログイン</Link>}
         </div>
       </div>
     </>
