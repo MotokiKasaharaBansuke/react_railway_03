@@ -16,12 +16,17 @@ export const TokenProvider = ({ children }) => {
     setToken(userToken);
   };
 
+  const removeToken = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+  };
+
   useEffect(() => {
     setToken(getTokenFromLocalStorage());
   }, []);
 
   return (
-    <TokenContext.Provider value={{ token, setToken: saveToken }}>
+    <TokenContext.Provider value={{ token, setToken: saveToken, removeToken }}>
       {children}
     </TokenContext.Provider>
   );
