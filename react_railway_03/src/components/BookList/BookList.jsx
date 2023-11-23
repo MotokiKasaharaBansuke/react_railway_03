@@ -53,7 +53,7 @@ export const BookList = () => {
   return (
     <>
       <div>
-        <Link to="/new">新規書籍レビュー作成</Link>
+        <Link to="/book/new">新規書籍レビュー作成</Link>
       </div>
       <div className="book-list">
         <h2 className="book-list__header">一覧</h2>
@@ -62,7 +62,7 @@ export const BookList = () => {
         <ul className="book-list__items">
           {books.map((book) => (
             <li key={book.id} className="book-list__item">
-              {book.title}
+              <Link to={`/book/${book.id}`}>{book.title}</Link>
             </li>
           ))}
         </ul>

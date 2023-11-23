@@ -9,6 +9,7 @@ import { FlashMessage } from "../components/FlashMessage/FlashMessage";
 import { PrivateRoute } from "./PrivateRoute";
 import { useToken } from "../services/useTokenContext";
 import { NewBook } from "../components/NewBook/NewBook";
+import { Book } from "../components/Book/Book";
 
 export const Router = () => {
   const { token } = useToken();
@@ -20,6 +21,7 @@ export const Router = () => {
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/signin" element={<SignIn />} />
         <Route exact path="/" element={<BookList />} />
+        <Route exact path="/book/:id" element={<Book />} />
         <Route
           exact
           path="/profile"
@@ -31,7 +33,7 @@ export const Router = () => {
         />
         <Route
           exact
-          path="/new"
+          path="/book/new"
           element={
             <PrivateRoute>
               <NewBook />

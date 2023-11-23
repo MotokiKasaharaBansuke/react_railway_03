@@ -1,0 +1,28 @@
+.book {
+  padding: 1.25rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1.25rem;
+
+  &__loading,
+  &__error {
+    color: red;
+    font-weight: bold;
+  }
+
+  &__section {
+    margin-bottom: 0.625rem;
+  }
+
+  &__label {
+    font-weight: bold;
+  }
+
+  &__title,
+  &__url,
+  &__detail,
+  &__review,
+  &__reviewer {
+    margin-left: 0.625rem;
+    font-size: 0.875rem;
+  }
+}

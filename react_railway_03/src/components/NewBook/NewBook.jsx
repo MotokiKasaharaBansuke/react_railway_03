@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useToken } from "../../services/useTokenContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { postBook } from "../../services/bookService";
 import { useFlashMessage } from "../../services/useFlashMessageContext";
 
@@ -43,6 +43,7 @@ export const NewBook = () => {
 
   return (
     <div>
+      <Link to="/">戻る</Link>
       <h2>新規書籍レビュー作成</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {apiError && <p style={{ color: "red" }}>{apiError}</p>}
